@@ -1,27 +1,50 @@
 name: Pipeline manual, agendada e por push
 
 on:
+  # Execução manual através da aba "Actions" no GitHub
   workflow_dispatch:
 
+  # Execução agendada de segunda a sexta-feira às 8h
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 8 * * 1-5'
 
+  # Execução por push em branches main e feature
   push:
     branches:
       - main
       - feature/**
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  unit-tests:
+    runs-on:  ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      # clone do projeto
+      - uses: actions/checkout@v4    
+
+      #instalação do node
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '24.x'
+
+      # instalação das dependencias
       - name: Install dependencies
         run: npm install
         
-      - name: Run tests
+      - name: Execução dos testes unitários
         run: npx mocha
+
+      - name: Gerando relatório de execução
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-execucao
+          path: reports/junit.xml
+          retention-days: 7
+
+      - name: Gerando relatório de cobertura
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-cobertura
+          path: coverage/
+          retention-days: 7
