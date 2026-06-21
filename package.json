@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha \"test/**/*Test.js\""
+    "test": "mocha \"test/**/*Test.js\"",
+    "test:junit": "mkdir -p reports && mocha \"test/**/*Test.js\" --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit.xml"
   },
   "repository": {
     "type": "git",
