@@ -29,15 +29,16 @@ jobs:
       # instalação das dependencias
       - name: Install dependencies
         run: npm install
+
+      - name: Criar pasta de relatórios
+        run: mkdir -p reports  
         
       - name: Execução dos testes unitários
-        run: npx mocha
+        run: npm run test:ci
 
-      - name: Test Report
-        uses: EnricoMi/publish-unit-test-result-action@v2      
-        if: (!cancelled())    
+      - name: Upload do artefato de testes
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
+          name: test-results
+          path: reports/junit.xml
