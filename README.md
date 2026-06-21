@@ -43,5 +43,3 @@ A pipeline gera e publica os seguintes relatórios:
 * **Relatório de execução dos testes**
   Exibe o resultado da execução dos testes unitários, indicando testes aprovados e falhados.
 
-* **Relatório de cobertura de código**
-  Apresenta a porcentagem do código-fonte coberta pelos testes automatizados, auxiliando na análise da qualidade da suíte de testes.
