@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha \"test/**/*Test.js\"",
-    "test:junit": "mkdir -p reports && mocha \"test/**/*Test.js\" --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit.xml",    
-    "test:ci": "npm run test:junit"
+    "test:junit": "mkdir -p reports && mocha \"test/**/*Test.js\" --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit.xml",
+    "test:coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha \"test/**/*Test.js\"",
+    "test:ci": "npm run test:junit && npm run test:coverage"
   },
   "repository": {
     "type": "git",
